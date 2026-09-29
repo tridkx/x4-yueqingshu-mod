@@ -1,12 +1,12 @@
 {
   "tool": "x4-anim-preview/ai_check",
-  "generated": "2026-09-30 00:28:16",
+  "generated": "2026-09-30 00:38:14",
   "mod_dir": "D:\\dsh-x4\\yueqingshu\\work\\check_b",
   "mod_assets": {
     "torso": "yue_b_body.xac",
     "head": "yue_b_head.xac"
   },
-  "elapsed_s": 60.4,
+  "elapsed_s": 58.2,
   "static": {
     "skeleton": {
       "torso": {
@@ -48,10 +48,10 @@
         "tris": 21867
       },
       "head": {
-        "mod_verts": 16598,
+        "mod_verts": 16034,
         "vanilla_verts": 5002,
-        "ratio": 3.318,
-        "tris": 21641
+        "ratio": 3.206,
+        "tris": 20741
       }
     },
     "normals": {
@@ -61,7 +61,7 @@
         "note": "mean|dot(面法线,顶点法线)|，接近 1 = 平面着色"
       },
       "head": {
-        "mod": 0.9822,
+        "mod": 0.9816,
         "vanilla": 0.9819,
         "note": "mean|dot(面法线,顶点法线)|，接近 1 = 平面着色"
       }
@@ -72,7 +72,7 @@
         "vanilla": 0.0004
       },
       "head": {
-        "mod": 0.0017,
+        "mod": 0.0018,
         "vanilla": 0.0
       }
     }
@@ -89,9 +89,9 @@
       "matched": 0.9672,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 8.664,
+          "mod": 8.731,
           "vanilla": 6.831,
-          "ratio": 1.268
+          "ratio": 1.278
         },
         "feet_gap_cm": {
           "mod": 30.605,
@@ -118,9 +118,9 @@
       "matched": 0.9714,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 8.552,
+          "mod": 8.619,
           "vanilla": 6.722,
-          "ratio": 1.272
+          "ratio": 1.282
         },
         "feet_gap_cm": {
           "mod": 28.23,
@@ -147,9 +147,9 @@
       "matched": 0.7624,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 8.632,
+          "mod": 8.7,
           "vanilla": 6.809,
-          "ratio": 1.268
+          "ratio": 1.278
         },
         "feet_gap_cm": {
           "mod": 38.285,

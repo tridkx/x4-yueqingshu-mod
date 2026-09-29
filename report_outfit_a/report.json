@@ -1,12 +1,12 @@
 {
   "tool": "x4-anim-preview/ai_check",
-  "generated": "2026-09-30 00:26:35",
+  "generated": "2026-09-30 00:36:54",
   "mod_dir": "D:\\dsh-x4\\yueqingshu\\work\\x4_yue_argon_add",
   "mod_assets": {
     "torso": "yue_a_body.xac",
     "head": "yue_a_head.xac"
   },
-  "elapsed_s": 61.0,
+  "elapsed_s": 60.9,
   "static": {
     "skeleton": {
       "torso": {
@@ -48,10 +48,10 @@
         "tris": 20118
       },
       "head": {
-        "mod_verts": 19730,
+        "mod_verts": 19166,
         "vanilla_verts": 5002,
-        "ratio": 3.944,
-        "tris": 22543
+        "ratio": 3.832,
+        "tris": 21643
       }
     },
     "normals": {
@@ -61,7 +61,7 @@
         "note": "mean|dot(面法线,顶点法线)|，接近 1 = 平面着色"
       },
       "head": {
-        "mod": 0.986,
+        "mod": 0.9854,
         "vanilla": 0.9819,
         "note": "mean|dot(面法线,顶点法线)|，接近 1 = 平面着色"
       }
@@ -72,7 +72,7 @@
         "vanilla": 0.0004
       },
       "head": {
-        "mod": 0.0017,
+        "mod": 0.0019,
         "vanilla": 0.0
       }
     }
@@ -89,9 +89,9 @@
       "matched": 0.9672,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 9.583,
+          "mod": 9.648,
           "vanilla": 6.831,
-          "ratio": 1.403
+          "ratio": 1.412
         },
         "feet_gap_cm": {
           "mod": 29.332,
@@ -108,7 +108,7 @@
         }
       },
       "flags": [
-        "关节撕裂 是 vanilla 的 140%（上限 135%）：9.58 vs 6.83"
+        "关节撕裂 是 vanilla 的 141%（上限 135%）：9.65 vs 6.83"
       ]
     },
     {
@@ -120,9 +120,9 @@
       "matched": 0.9714,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 9.447,
+          "mod": 9.511,
           "vanilla": 6.722,
-          "ratio": 1.405
+          "ratio": 1.415
         },
         "feet_gap_cm": {
           "mod": 27.96,
@@ -139,7 +139,7 @@
         }
       },
       "flags": [
-        "关节撕裂 是 vanilla 的 140%（上限 135%）：9.45 vs 6.72"
+        "关节撕裂 是 vanilla 的 142%（上限 135%）：9.51 vs 6.72"
       ]
     },
     {
@@ -151,9 +151,9 @@
       "matched": 0.7624,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 9.539,
+          "mod": 9.603,
           "vanilla": 6.809,
-          "ratio": 1.401
+          "ratio": 1.41
         },
         "feet_gap_cm": {
           "mod": 37.138,
@@ -170,7 +170,7 @@
         }
       },
       "flags": [
-        "关节撕裂 是 vanilla 的 140%（上限 135%）：9.54 vs 6.81"
+        "关节撕裂 是 vanilla 的 141%（上限 135%）：9.60 vs 6.81"
       ]
     }
   ],

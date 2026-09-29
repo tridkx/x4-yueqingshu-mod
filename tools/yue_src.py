@@ -66,8 +66,6 @@ MATS = {
         'MAJ02_01_Eyelash_eyebrow': ('brow', 'MAJ03_01_Eyelash_Master',
                                      None, None),
         'eyelash_new_Inst': ('eyelash', 'MAJ03_01_Eyelash_Master', None, None),
-        'MI_MAJ02_01_Eye_Occlusion': ('eyeocc', None, None, None),
-        'MI_MAJ02_01_TearLine': ('tear', None, None, None),
     },
     'b': {
         'MI_MAJ02_01_head': ('head', 'T_MAJ02_01_head_D_skin',
@@ -92,8 +90,6 @@ MATS = {
         'MAJ02_01_Eyelash_eyebrow': ('brow', 'MAJ03_01_Eyelash_Master',
                                      None, None),
         'MI_MAJ02_01_eyelash': ('eyelash', 'T_MAJ02_01_eyelash', None, None),
-        'MI_MAJ02_01_Eye_Occlusion': ('eyeocc', None, None, None),
-        'MI_MAJ02_01_TearLine': ('tear', None, None, None),
     },
 }
 
@@ -103,7 +99,20 @@ MATS = {
 #: shell the artists keep around so the character does not turn into a hole
 #: when a garment clip plays.  The `.blend` exports already drop it; shipping
 #: it would put an opaque second skin *over* the real one.
-DROP_MATERIALS = {'M_ProxyHide'}
+#:
+#: `Eye_Occlusion` and `TearLine` are the same idea expressed through alpha,
+#: and the extraction's own `.blend` is the evidence: it sets their Blender
+#: alpha to **0.0** and **0.15**.  They are 408 and 492 faces of eye-socket
+#: shading that the game composites; carried into X4 as opaque surfaces they
+#: become a beige patch over each eye and a dark ring under it -- visible in
+#: `docs/成品预览_两套装.png`'s first render, which is how this was caught.
+#: X4's blendmode is a single value, so "faint" is not expressible for
+#: geometry that also has to be TWOSIDED; dropping them is equivalent.
+DROP_MATERIALS = {
+    'M_ProxyHide',
+    'MI_MAJ02_01_Eye_Occlusion',
+    'MI_MAJ02_01_TearLine',
+}
 
 # --------------------------------------------------------------------------
 # which X4 asset each material belongs to
@@ -112,8 +121,7 @@ DROP_MATERIALS = {'M_ProxyHide'}
 #: slots the vanilla Argon-female assets declare; see `build_yue_mod.SLOT_PLAN`.
 SLOTS = {
     'head': [
-        ('face', ['head', 'eye', 'mouth', 'brow', 'eyelash', 'eyeocc',
-                  'tear'], 0),
+        ('face', ['head', 'eye', 'mouth', 'brow', 'eyelash'], 0),
         ('hair', ['hair'], 1),
     ],
     'body': [
@@ -150,10 +158,12 @@ SHADER = {
 #: vanishing when seen from behind.
 BLEND = {
     'hair': 'TWOSIDED',
-    'eyelash': 'TWOSIDED',
+    # 睫毛是**唯一**走 alpha 混合的一件，因为源就是这么做的：提取仓库自己的
+    # `.blend` 给它设了 alpha=0.35 —— 9751 个顶点、12074 个面的睫毛卡片，
+    # 不淡化就是眼睛上一大块深色（第一版渲染出来的"浓重眼线"就是它）。
+    # 代价是失去 TWOSIDED；睫毛贴在眼球上，本来就极少被从背面看到。
+    'eyelash': 'ALPHA8',
     'brow': 'TWOSIDED',
-    'eyeocc': 'TWOSIDED',
-    'tear': 'TWOSIDED',
     'cloth1': 'TWOSIDED',
     'cloth2': 'TWOSIDED',
     'cloth3': 'TWOSIDED',
@@ -165,32 +175,33 @@ BLEND = {
 }
 DEFAULT_BLEND = 'TWOSIDED'
 
-#: stem -> placeholder base colour, for the four materials Pal7 drives purely
-#: from shader parameters (no `PM_Diffuse` at all).  Read off the rendered
-#: preview rather than invented: `eyelash_new_Inst` is the dark lash mass, the
-#: tear line is a wet highlight, the occlusion layer is a soft shadow.
+#: stem -> placeholder base colour, for the materials Pal7 drives purely from
+#: shader parameters (no `PM_Diffuse` at all).  The values are the `.blend`'s
+#: own Principled base colours converted to 8-bit, not invented.
 PLACEHOLDER_RGB = {
-    'eyelash': (38, 30, 28),
-    'eyeocc': (168, 150, 142),
-    'tear': (232, 236, 240),
+    'eyelash': (20, 14, 6),
 }
 DEFAULT_PLACEHOLDER = (200, 200, 200)
+
+#: stem -> placeholder alpha, again read off the `.blend`.  Only a material
+#: whose blend mode actually uses alpha needs one.
+PLACEHOLDER_ALPHA = {
+    'eyelash': 0.35,
+}
 
 #: stem -> smoothness (0 = matte, 1 = mirror), used only where the source has
 #: no `_ORM` map to read roughness from.
 SMOOTHNESS = {
     'head': 0.28, 'body': 0.28, 'mouth': 0.30,
     'eye': 0.72, 'eyelash': 0.35, 'brow': 0.25,
-    'eyeocc': 0.30, 'tear': 0.85,
     'hair': 0.42, 'cloth1': 0.20, 'cloth2': 0.20, 'cloth3': 0.20,
     'tassel': 0.30,
 }
 
 #: Materials whose albedo genuinely needs an alpha channel (BC3 rather than
-#: BC1).  Only the hair: its `_alpha` map is the strand cut-out.  Everything
-#: else measured fully opaque through its own UVs, and giving them an alpha
-#: channel would cost 2x the texture memory for a mask nobody reads.
-ALPHA_STEMS = {'hair'}
+#: BC1).  The hair's `_alpha` map is the strand cut-out; the lashes have no
+#: map at all, so their alpha lives in the generated placeholder.
+ALPHA_STEMS = {'hair', 'eyelash'}
 
 # --------------------------------------------------------------------------
 # decimation
@@ -217,12 +228,12 @@ DECIMATE = {
     'a': {
         'hair': 0.20, 'eyelash': 0.15, 'head': 0.70, 'body': 0.40,
         'cloth1': 0.35, 'cloth2': 0.22, 'tassel': 0.35,
-        'eye': 1.0, 'mouth': 0.60, 'brow': 1.0, 'eyeocc': 1.0, 'tear': 1.0,
+        'eye': 1.0, 'mouth': 0.60, 'brow': 1.0,
     },
     'b': {
         'hair': 0.45, 'eyelash': 0.15, 'head': 0.70, 'body': 0.45,
         'cloth1': 0.30, 'cloth2': 0.30, 'cloth3': 0.60, 'tassel': 0.40,
-        'eye': 1.0, 'mouth': 0.60, 'brow': 1.0, 'eyeocc': 1.0, 'tear': 1.0,
+        'eye': 1.0, 'mouth': 0.60, 'brow': 1.0,
     },
 }
 DEFAULT_DECIMATE = 0.35

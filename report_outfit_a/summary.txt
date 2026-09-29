@@ -1,21 +1,21 @@
-X4 mod 动作检查  2026-09-30 00:26:35
+X4 mod 动作检查  2026-09-30 00:36:54
 mod: D:\dsh-x4\yueqingshu\work\x4_yue_argon_add
 结论: WARN
 
 告警:
-  ! [anim_stand_idle_05] 关节撕裂 是 vanilla 的 140%（上限 135%）：9.58 vs 6.83
-  ! [anim_sit_idle_01] 关节撕裂 是 vanilla 的 140%（上限 135%）：9.45 vs 6.72
-  ! [anim_2htooluse_01] 关节撕裂 是 vanilla 的 140%（上限 135%）：9.54 vs 6.81
+  ! [anim_stand_idle_05] 关节撕裂 是 vanilla 的 141%（上限 135%）：9.65 vs 6.83
+  ! [anim_sit_idle_01] 关节撕裂 是 vanilla 的 142%（上限 135%）：9.51 vs 6.72
+  ! [anim_2htooluse_01] 关节撕裂 是 vanilla 的 141%（上限 135%）：9.60 vs 6.81
 
 各动画指标（mod vs vanilla）:
   anim_stand_idle_05
-    joint_tear_cm      9.583 vs 6.831  (1.403×)
+    joint_tear_cm      9.648 vs 6.831  (1.412×)
     feet_gap_cm        29.332 vs 33.067  (0.887×)
   anim_sit_idle_01
-    joint_tear_cm      9.447 vs 6.722  (1.405×)
+    joint_tear_cm      9.511 vs 6.722  (1.415×)
     feet_gap_cm        27.96 vs 30.84  (0.907×)
   anim_2htooluse_01
-    joint_tear_cm      9.539 vs 6.809  (1.401×)
+    joint_tear_cm      9.603 vs 6.809  (1.41×)
     feet_gap_cm        37.138 vs 40.663  (0.913×)
 
 对比图: shots/anim_stand_idle_05.png, shots/anim_stand_idle_05_views.png, shots/anim_sit_idle_01.png, shots/anim_sit_idle_01_views.png, shots/anim_2htooluse_01.png, shots/anim_2htooluse_01_views.png

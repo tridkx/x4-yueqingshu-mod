@@ -227,15 +227,28 @@ def encode_outfit(key, out_dir, cache, verbose=True):
             size = (MAX_SIZE, MAX_SIZE)
             rgb = yue_src.PLACEHOLDER_RGB.get(stem,
                                               yue_src.DEFAULT_PLACEHOLDER)
-            ck = ('flat', stem, rgb)
+            # 睫毛是"半透明的卡片"：源里没有贴图，它的 alpha 来自材质参数
+            # （提取仓库的 `.blend` 设的是 0.35）。这里把那个 alpha 烙进
+            # 占位图，配 `blendmode="ALPHA8"` 才能还原出"淡"的效果。
+            pa = yue_src.PLACEHOLDER_ALPHA.get(stem)
+            ck = ('flat', stem, rgb, pa)
             if ck not in cache:
                 base = os.path.join(out_dir, '%s_%s_%s_diff.dds'
                                     % (COLLECTION, key, stem))
-                bc_encode.encode_bc1(Image.new('RGB', size, tuple(rgb)), base)
-                cache[ck] = (base, 'BC1', size)
+                if pa is None:
+                    bc_encode.encode_bc1(Image.new('RGB', size, tuple(rgb)),
+                                         base)
+                    fmt = 'BC1'
+                else:
+                    bc_encode.encode_bc3(
+                        Image.new('RGBA', size,
+                                  tuple(rgb) + (int(round(pa * 255)),)), base)
+                    fmt = 'BC3'
+                cache[ck] = (base, fmt, size)
                 if verbose:
-                    print('   %-22s 无基础色贴图 -> 占位纯色 #%02X%02X%02X'
-                          % (stem, rgb[0], rgb[1], rgb[2]))
+                    print('   %-22s 无基础色贴图 -> 占位纯色 #%02X%02X%02X%s'
+                          % (stem, rgb[0], rgb[1], rgb[2],
+                             '' if pa is None else ' alpha=%.2f' % pa))
             base, fmt, size = cache[ck]
             entry['textures']['Diffuse'] = base
 
