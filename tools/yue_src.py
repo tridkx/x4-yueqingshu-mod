@@ -259,8 +259,36 @@ DECIMATE_FLOOR = 120
 #: the user said so.
 LEG_SHRINK = {
     'a': 1.00,
-    'b': 0.55,
+    'b': 1.00,
 }
+
+#: Per outfit: how much wider to draw the skirt at its hem (1.0 = untouched).
+#:
+#: This replaces the earlier "narrow the legs" attempt.  Narrowing the legs
+#: fixed the clipping number but made the leg read wrong, and it is the wrong
+#: end of the problem anyway: the garment is what does not fit.
+#:
+#: The widening is **graded by height** -- the waist stays exactly where it is
+#: (it is fitted to the sash and must not push through it) and the skirt grows
+#: towards the hem, which is also how a real skirt hangs.  `_EXP` < 1 front-
+#: loads the growth so the upper thigh -- where the legs actually press -- gets
+#: most of it.
+SKIRT_WIDEN = {
+    'a': 1.00,
+    'b': 1.30,
+}
+#: `cloth1/2/3` 是**整套服装**的材质，不是"裙子"：实测它们的顶点从 z=190
+#: （头顶，披肩/立领）一直到 z=−1（地面，靴底）。整块放阔会把上衣、披肩和
+#: 靴子一起放大 —— 第一版就是这么干的，最大位移 8.63 cm，全在靴子上。
+#:
+#: 所以放阔被限制在**腰胯以下、靴口以上**的一条高度带里，两端各留一段羽化，
+#: 免得出现台阶：
+#:
+#:     靴口 ~50        大腿穿模段 53–77        胯 ~88      腰带 ~95–105
+#:             └──────────── 放阔带 50–85 ────────────┘
+SKIRT_WIDEN_PARTS = ('cloth1', 'cloth2', 'cloth3')
+SKIRT_WIDEN_BAND = (50.0, 85.0)
+SKIRT_WIDEN_FEATHER = 6.0
 
 #: The bones a vertex must be mostly bound to before it counts as "leg".  The
 #: threshold is on the summed weight of these bones, so a vertex blended across

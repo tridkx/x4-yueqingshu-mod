@@ -384,6 +384,43 @@ def main():
         print('  腿：%d 个顶点横向收窄到 %.0f%%（最大位移 %.2f cm，骨骼未动）'
               % (n_leg, shrink_k * 100, moved))
 
+    # ------------------------------------------------------------ 裙子放阔
+    # 长裙套装（B）的大腿会从裙子两侧顶出来。上一版走的是"把腿收窄"，
+    # 数字修好了但腿的形状读起来不对 —— 而且方向本来也反了：不合身的是
+    # **衣服**。
+    #
+    # 放阔**按高度渐变**：腰部一动不动（它贴着腰带，推出去会穿模），越往下
+    # 越宽，这也正是真裙子垂下来的样子。`SKIRT_WIDEN_EXP` < 1 让增长偏向上
+    # 段，因为腿真正压到裙子的地方在大腿而不是下摆。
+    widen_k = yue_src.SKIRT_WIDEN.get(OUTFIT_KEY, 1.0)
+    if widen_k > 1.001:
+        sk = [p for p in parts if p['stem'] in yue_src.SKIRT_WIDEN_PARTS]
+        if sk:
+            lo, hi = yue_src.SKIRT_WIDEN_BAND
+            fe = yue_src.SKIRT_WIDEN_FEATHER
+            n_sk = 0
+            moved = 0.0
+            for p in sk:
+                V = p['verts']
+                for i in range(len(V)):
+                    z = float(V[i, 2])
+                    if z <= lo - fe or z >= hi + fe:
+                        continue          # 靴子 / 上衣 / 披肩：原样
+                    if z < lo:
+                        t = (z - (lo - fe)) / fe
+                    elif z > hi:
+                        t = ((hi + fe) - z) / fe
+                    else:
+                        t = 1.0
+                    k = 1.0 + (widen_k - 1.0) * t
+                    old = float(V[i, 0])
+                    V[i, 0] = old * k
+                    moved = max(moved, abs(old - V[i, 0]))
+                    n_sk += 1
+            print('  裙子：%d 个顶点放阔（z %.0f-%.0f 带内 ×%.2f，两端羽化 %.0f，'
+                  '最大位移 %.2f cm）'
+                  % (n_sk, lo, hi, widen_k, fe, moved))
+
     # ------------------------------------------------------------------ 网格
     tex_dir = paths.outfit_tex(OUTFIT)
     ratios = yue_src.DECIMATE[OUTFIT_KEY]

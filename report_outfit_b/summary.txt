@@ -1,18 +1,21 @@
-X4 mod 动作检查  2026-09-30 01:02:58
+X4 mod 动作检查  2026-09-30 01:27:15
 mod: D:\dsh-x4\yueqingshu\work\check_b
-结论: OK
+结论: WARN
 
-没有发现问题：骨架一致、指标与 vanilla 相当。
+告警:
+  ! [anim_stand_idle_05] 两脚间距 只有 vanilla 的 80%（下限 85%）：26.50 vs 33.07
+  ! [anim_sit_idle_01] 两脚间距 只有 vanilla 的 79%（下限 85%）：24.37 vs 30.84
+  ! [anim_2htooluse_01] 两脚间距 只有 vanilla 的 84%（下限 85%）：34.22 vs 40.66
 
 各动画指标（mod vs vanilla）:
   anim_stand_idle_05
-    joint_tear_cm      8.66 vs 6.831  (1.268×)
-    feet_gap_cm        29.688 vs 33.067  (0.898×)
+    joint_tear_cm      8.762 vs 6.831  (1.283×)
+    feet_gap_cm        26.5 vs 33.067  (0.801×)
   anim_sit_idle_01
-    joint_tear_cm      8.552 vs 6.722  (1.272×)
-    feet_gap_cm        27.323 vs 30.84  (0.886×)
+    joint_tear_cm      8.652 vs 6.722  (1.287×)
+    feet_gap_cm        24.367 vs 30.84  (0.79×)
   anim_2htooluse_01
-    joint_tear_cm      8.634 vs 6.809  (1.268×)
-    feet_gap_cm        37.377 vs 40.663  (0.919×)
+    joint_tear_cm      8.73 vs 6.809  (1.282×)
+    feet_gap_cm        34.217 vs 40.663  (0.841×)
 
 对比图: shots/anim_stand_idle_05.png, shots/anim_stand_idle_05_views.png, shots/anim_sit_idle_01.png, shots/anim_sit_idle_01_views.png, shots/anim_2htooluse_01.png, shots/anim_2htooluse_01_views.png

@@ -1,12 +1,12 @@
 {
   "tool": "x4-anim-preview/ai_check",
-  "generated": "2026-09-30 01:02:58",
+  "generated": "2026-09-30 01:27:15",
   "mod_dir": "D:\\dsh-x4\\yueqingshu\\work\\check_b",
   "mod_assets": {
     "torso": "yue_b_body.xac",
     "head": "yue_b_head.xac"
   },
-  "elapsed_s": 57.2,
+  "elapsed_s": 59.8,
   "static": {
     "skeleton": {
       "torso": {
@@ -42,10 +42,10 @@
     },
     "budget": {
       "torso": {
-        "mod_verts": 16977,
+        "mod_verts": 16990,
         "vanilla_verts": 4600,
-        "ratio": 3.691,
-        "tris": 21866
+        "ratio": 3.693,
+        "tris": 21865
       },
       "head": {
         "mod_verts": 16034,
@@ -56,7 +56,7 @@
     },
     "normals": {
       "torso": {
-        "mod": 0.969,
+        "mod": 0.9697,
         "vanilla": 0.945,
         "note": "mean|dot(面法线,顶点法线)|，接近 1 = 平面着色"
       },
@@ -68,7 +68,7 @@
     },
     "winding": {
       "torso": {
-        "mod": 0.0026,
+        "mod": 0.0025,
         "vanilla": 0.0004
       },
       "head": {
@@ -89,25 +89,27 @@
       "matched": 0.9672,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 8.66,
+          "mod": 8.762,
           "vanilla": 6.831,
-          "ratio": 1.268
+          "ratio": 1.283
         },
         "feet_gap_cm": {
-          "mod": 29.688,
+          "mod": 26.5,
           "vanilla": 33.067,
-          "ratio": 0.898
+          "ratio": 0.801
         },
         "lateral_chain_ok": {
           "mod": true,
           "vanilla": true
         },
         "ground_gap_min_cm": {
-          "mod": -0.54,
+          "mod": -0.53,
           "vanilla": -0.34
         }
       },
-      "flags": []
+      "flags": [
+        "两脚间距 只有 vanilla 的 80%（下限 85%）：26.50 vs 33.07"
+      ]
     },
     {
       "name": "anim_sit_idle_01",
@@ -118,25 +120,27 @@
       "matched": 0.9714,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 8.552,
+          "mod": 8.652,
           "vanilla": 6.722,
-          "ratio": 1.272
+          "ratio": 1.287
         },
         "feet_gap_cm": {
-          "mod": 27.323,
+          "mod": 24.367,
           "vanilla": 30.84,
-          "ratio": 0.886
+          "ratio": 0.79
         },
         "lateral_chain_ok": {
           "mod": false,
           "vanilla": false
         },
         "ground_gap_min_cm": {
-          "mod": 0.71,
+          "mod": 0.67,
           "vanilla": 1.1
         }
       },
-      "flags": []
+      "flags": [
+        "两脚间距 只有 vanilla 的 79%（下限 85%）：24.37 vs 30.84"
+      ]
     },
     {
       "name": "anim_2htooluse_01",
@@ -147,25 +151,27 @@
       "matched": 0.7624,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 8.634,
+          "mod": 8.73,
           "vanilla": 6.809,
-          "ratio": 1.268
+          "ratio": 1.282
         },
         "feet_gap_cm": {
-          "mod": 37.377,
+          "mod": 34.217,
           "vanilla": 40.663,
-          "ratio": 0.919
+          "ratio": 0.841
         },
         "lateral_chain_ok": {
           "mod": true,
           "vanilla": true
         },
         "ground_gap_min_cm": {
-          "mod": -2.98,
+          "mod": -3.02,
           "vanilla": -2.7
         }
       },
-      "flags": []
+      "flags": [
+        "两脚间距 只有 vanilla 的 84%（下限 85%）：34.22 vs 40.66"
+      ]
     }
   ],
   "shots": [
@@ -230,6 +236,6 @@
       ]
     }
   ],
-  "status": "ok",
+  "status": "warn",
   "how_to_read": "status: ok/warn/fail。hard_failures 是必须修的硬伤（骨架不一致、绕序翻转、顶点爆炸）。flags 是疑似问题，每条都给了 mod/vanilla 的比值。animations[].metrics 里 ratio = mod/vanilla，越接近 1 越好。shots/ 里每张图从左到右是 mod、vanilla 交替的同一时刻，可直接目视对比。"
 }

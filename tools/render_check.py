@@ -47,6 +47,9 @@ GAIN = float(arg('--gain', '3.0'))
 #: `--zoom z0,z1` 渲染指定高度区间（cm，X4 的 Z 就是身高方向）。查"腿穿出
 #: 裙子"这类问题时全身图看不出名堂，必须贴到那一段去看。
 ZOOM = arg('--zoom')
+#: `--elev` 抬高相机并俯视若干度。查"内八/外八"必须俯视 —— 正面图里
+#: 脚尖的朝向只体现为左右各偏几个像素，看不出来。
+ELEV = float(arg('--elev', '0'))
 
 if not BLEND or not OUT:
     raise SystemExit('need --blend and --out')
@@ -121,6 +124,16 @@ for mat in bpy.data.materials:
 
 
 def shoot(name, loc, target, ortho, res_x, res_y):
+    if ELEV:
+        # 把相机沿"从目标出发的视线方向"抬起来：水平距离乘 cos、高度加
+        # h*sin。第一版只加了高度、没缩水平距离，等于把相机挪到了目标
+        # **上方**而不是**斜上方**，对焦就偏了（渲染出来只有裙子没有脚）。
+        import math as _m
+        dx, dy = loc[0] - target[0], loc[1] - target[1]
+        hh = _m.hypot(dx, dy) or 1.0
+        e = _m.radians(ELEV)
+        loc = (target[0] + dx * _m.cos(e), target[1] + dy * _m.cos(e),
+               target[2] + hh * _m.sin(e))
     cam.location = loc
     cam_data.ortho_scale = ortho
     d = Vector(target) - Vector(loc)
