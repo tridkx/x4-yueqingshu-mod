@@ -1,4 +1,4 @@
-X4 mod 动作检查  2026-09-30 00:38:14
+X4 mod 动作检查  2026-09-30 01:02:58
 mod: D:\dsh-x4\yueqingshu\work\check_b
 结论: OK
 
@@ -6,13 +6,13 @@ mod: D:\dsh-x4\yueqingshu\work\check_b
 
 各动画指标（mod vs vanilla）:
   anim_stand_idle_05
-    joint_tear_cm      8.731 vs 6.831  (1.278×)
-    feet_gap_cm        30.605 vs 33.067  (0.926×)
+    joint_tear_cm      8.66 vs 6.831  (1.268×)
+    feet_gap_cm        29.688 vs 33.067  (0.898×)
   anim_sit_idle_01
-    joint_tear_cm      8.619 vs 6.722  (1.282×)
-    feet_gap_cm        28.23 vs 30.84  (0.915×)
+    joint_tear_cm      8.552 vs 6.722  (1.272×)
+    feet_gap_cm        27.323 vs 30.84  (0.886×)
   anim_2htooluse_01
-    joint_tear_cm      8.7 vs 6.809  (1.278×)
-    feet_gap_cm        38.285 vs 40.663  (0.942×)
+    joint_tear_cm      8.634 vs 6.809  (1.268×)
+    feet_gap_cm        37.377 vs 40.663  (0.919×)
 
 对比图: shots/anim_stand_idle_05.png, shots/anim_stand_idle_05_views.png, shots/anim_sit_idle_01.png, shots/anim_sit_idle_01_views.png, shots/anim_2htooluse_01.png, shots/anim_2htooluse_01_views.png

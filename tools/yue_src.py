@@ -244,6 +244,32 @@ DECIMATE_FLOOR = 120
 # --------------------------------------------------------------------------
 # geometry fixes
 # --------------------------------------------------------------------------
+#: Per outfit: how much of the leg's **horizontal width** to keep.
+#:
+#: The long skirt of outfit B reaches past mid-thigh, and the lateral damping
+#: that fixes the "catwalk" (see `yue_to_x4.LATERAL_DAMP`) pushes the legs out
+#: to vanilla's stance width.  For outfit A that is harmless -- its skirt stops
+#: at mid-thigh and the legs below it are bare by design.  For B the legs then
+#: stick out through the sides of the skirt: measured with `diag_leg_clip.py`,
+#: up to **5.19 cm** at z=77 (and 2-5 cm across z=53..77).
+#:
+#: The fix is to narrow the leg *geometry* around its own bone axis -- the
+#: bones stay exactly where vanilla has them, so the animation is untouched and
+#: only the silhouette gets thinner.  Outfit A keeps 1.0: it is not broken and
+#: the user said so.
+LEG_SHRINK = {
+    'a': 1.00,
+    'b': 0.55,
+}
+
+#: The bones a vertex must be mostly bound to before it counts as "leg".  The
+#: threshold is on the summed weight of these bones, so a vertex blended across
+#: thigh and calf is still handled smoothly.
+LEG_BONES = ('Bip01 L Thigh', 'Bip01 R Thigh',
+             'Bip01 L Calf', 'Bip01 R Calf',
+             'Bip01 L Foot', 'Bip01 R Foot')
+LEG_BONE_MIN_WEIGHT = 0.5
+
 #: Pal7 models the garment on the body, so the two surfaces tie in depth and
 #: flicker.  Push the garment out along its own normals.  2 mm is far below
 #: anything visible at NPC range and far above the depth buffer's resolution

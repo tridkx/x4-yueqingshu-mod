@@ -348,6 +348,42 @@ def main():
     if occ:
         push(occ, yue_src.OCCLUSION_OFFSET)
 
+    # ------------------------------------------------------------ 腿的横向收窄
+    # 长裙套装（B）的裙摆到大腿中下部，而修"猫步"的横向阻尼把腿推到了
+    # vanilla 的站姿宽度上 —— 于是大腿从裙子两侧顶出来（`diag_leg_clip.py`
+    # 实测 z=53..77 段最多 5.19 cm）。短裙套装（A）的腿在裙外本来就是裸露的，
+    # 不受影响，所以它保持 1.0 不动。
+    #
+    # 收窄的是**几何**、绕它自己的骨轴，**骨骼一动不动**：动画照旧，
+    # 变的只有剪影的胖瘦。这也是用户点名要的做法（"水平缩小腿的宽度"）。
+    shrink_k = yue_src.LEG_SHRINK.get(OUTFIT_KEY, 1.0)
+    if shrink_k < 0.999:
+        leg_x = {b: float(x4_bones[b]['head'][0])
+                 for b in yue_src.LEG_BONES if b in x4_bones}
+        n_leg = 0
+        moved = 0.0
+        for p in parts:
+            V = p['verts']
+            for i, w in enumerate(p['weights']):
+                num = den = 0.0
+                for b, ww in w.items():
+                    bx = leg_x.get(b)
+                    if bx is not None:
+                        num += ww * bx
+                        den += ww
+                if den < yue_src.LEG_BONE_MIN_WEIGHT:
+                    continue
+                # 收缩中心用**该顶点自己那几根腿骨的加权 X**，不是主导骨：
+                # 跨大腿/小腿过渡带的顶点两根骨都占一部分，用主导骨会让
+                # 中心在 11.6 与 14.8 之间跳变，膝盖处立刻出现一圈台阶。
+                cx = num / den
+                old = V[i, 0]
+                V[i, 0] = cx + (old - cx) * shrink_k
+                moved = max(moved, abs(old - V[i, 0]))
+                n_leg += 1
+        print('  腿：%d 个顶点横向收窄到 %.0f%%（最大位移 %.2f cm，骨骼未动）'
+              % (n_leg, shrink_k * 100, moved))
+
     # ------------------------------------------------------------------ 网格
     tex_dir = paths.outfit_tex(OUTFIT)
     ratios = yue_src.DECIMATE[OUTFIT_KEY]

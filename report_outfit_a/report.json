@@ -1,12 +1,12 @@
 {
   "tool": "x4-anim-preview/ai_check",
-  "generated": "2026-09-30 00:36:54",
+  "generated": "2026-09-30 01:04:23",
   "mod_dir": "D:\\dsh-x4\\yueqingshu\\work\\x4_yue_argon_add",
   "mod_assets": {
     "torso": "yue_a_body.xac",
     "head": "yue_a_head.xac"
   },
-  "elapsed_s": 60.9,
+  "elapsed_s": 61.1,
   "static": {
     "skeleton": {
       "torso": {

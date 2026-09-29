@@ -1,12 +1,12 @@
 {
   "tool": "x4-anim-preview/ai_check",
-  "generated": "2026-09-30 00:38:14",
+  "generated": "2026-09-30 01:02:58",
   "mod_dir": "D:\\dsh-x4\\yueqingshu\\work\\check_b",
   "mod_assets": {
     "torso": "yue_b_body.xac",
     "head": "yue_b_head.xac"
   },
-  "elapsed_s": 58.2,
+  "elapsed_s": 57.2,
   "static": {
     "skeleton": {
       "torso": {
@@ -42,10 +42,10 @@
     },
     "budget": {
       "torso": {
-        "mod_verts": 17031,
+        "mod_verts": 16977,
         "vanilla_verts": 4600,
-        "ratio": 3.702,
-        "tris": 21867
+        "ratio": 3.691,
+        "tris": 21866
       },
       "head": {
         "mod_verts": 16034,
@@ -56,7 +56,7 @@
     },
     "normals": {
       "torso": {
-        "mod": 0.9699,
+        "mod": 0.969,
         "vanilla": 0.945,
         "note": "mean|dot(面法线,顶点法线)|，接近 1 = 平面着色"
       },
@@ -68,7 +68,7 @@
     },
     "winding": {
       "torso": {
-        "mod": 0.0023,
+        "mod": 0.0026,
         "vanilla": 0.0004
       },
       "head": {
@@ -89,21 +89,21 @@
       "matched": 0.9672,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 8.731,
+          "mod": 8.66,
           "vanilla": 6.831,
-          "ratio": 1.278
+          "ratio": 1.268
         },
         "feet_gap_cm": {
-          "mod": 30.605,
+          "mod": 29.688,
           "vanilla": 33.067,
-          "ratio": 0.926
+          "ratio": 0.898
         },
         "lateral_chain_ok": {
           "mod": true,
           "vanilla": true
         },
         "ground_gap_min_cm": {
-          "mod": -0.53,
+          "mod": -0.54,
           "vanilla": -0.34
         }
       },
@@ -118,21 +118,21 @@
       "matched": 0.9714,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 8.619,
+          "mod": 8.552,
           "vanilla": 6.722,
-          "ratio": 1.282
+          "ratio": 1.272
         },
         "feet_gap_cm": {
-          "mod": 28.23,
+          "mod": 27.323,
           "vanilla": 30.84,
-          "ratio": 0.915
+          "ratio": 0.886
         },
         "lateral_chain_ok": {
           "mod": false,
           "vanilla": false
         },
         "ground_gap_min_cm": {
-          "mod": 0.56,
+          "mod": 0.71,
           "vanilla": 1.1
         }
       },
@@ -147,21 +147,21 @@
       "matched": 0.7624,
       "metrics": {
         "joint_tear_cm": {
-          "mod": 8.7,
+          "mod": 8.634,
           "vanilla": 6.809,
-          "ratio": 1.278
+          "ratio": 1.268
         },
         "feet_gap_cm": {
-          "mod": 38.285,
+          "mod": 37.377,
           "vanilla": 40.663,
-          "ratio": 0.942
+          "ratio": 0.919
         },
         "lateral_chain_ok": {
           "mod": true,
           "vanilla": true
         },
         "ground_gap_min_cm": {
-          "mod": -3.09,
+          "mod": -2.98,
           "vanilla": -2.7
         }
       },

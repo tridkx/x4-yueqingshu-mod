@@ -6,6 +6,7 @@
 *.gz
 *.dds
 *.png
+!docs/*.png
 *.bmp
 *.jpg
 *.blend

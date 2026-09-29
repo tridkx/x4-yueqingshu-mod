@@ -44,6 +44,9 @@ HIDE = [s for s in (arg('--hide') or '').split(',') if s]
 #: 关掉背面剔除，用来区分"绕序错"和"贴图/光照错"。
 NO_CULL = arg('--no-cull') is not None
 GAIN = float(arg('--gain', '3.0'))
+#: `--zoom z0,z1` 渲染指定高度区间（cm，X4 的 Z 就是身高方向）。查"腿穿出
+#: 裙子"这类问题时全身图看不出名堂，必须贴到那一段去看。
+ZOOM = arg('--zoom')
 
 if not BLEND or not OUT:
     raise SystemExit('need --blend and --out')
@@ -146,6 +149,19 @@ head_lo = hi.z - h * 0.24
 views.append(('head', (mid.x, mid.y + 600, head_lo + h * 0.10),
               (mid.x, mid.y, head_lo + h * 0.10), h * 0.30 + 10,
               RES, RES))
+
+if ZOOM:
+    z0, z1 = [float(v) for v in ZOOM.split(',')]
+    tgt_z = (z0 + z1) / 2.0
+    span = max(z1 - z0, 1.0)
+    views = [
+        ('zoom_front', (mid.x, mid.y + 600, tgt_z), (mid.x, mid.y, tgt_z),
+         span * 1.15, RES, int(RES * 1.6)),
+        ('zoom_back', (mid.x, mid.y - 600, tgt_z), (mid.x, mid.y, tgt_z),
+         span * 1.15, RES, int(RES * 1.6)),
+        ('zoom_side', (mid.x + 600, mid.y, tgt_z), (mid.x, mid.y, tgt_z),
+         span * 1.15, RES, int(RES * 1.6)),
+    ]
 
 for name, loc, tgt, ortho, rx, ry in views:
     if ONLY and name != ONLY:
