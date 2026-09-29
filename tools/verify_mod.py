@@ -138,10 +138,13 @@ def check_materials(mod, c):
 def check_skeleton(mod, c):
     print('\n[3] skeleton (byte-for-byte against the vanilla host)')
     cat = os.path.join(mod, 'ext_01.cat')
+    # 基准必须**就是管线用的那个宿主**。这里原来写死了 sweater，
+    # 而 body 用的宿主是 jacket —— 两个 vanilla 资产的骨架并不是同一份
+    # 序列化（实测 21/91），于是这条检查会对完全正确的产物报 FAIL。
+    # 判据与管线共用 paths 里的同一个定义，就不可能再分歧。
     host_for = {
-        'head': r'assets\characters\argon\heads\char_arg_f_dyn_blend_head.xac',
-        'body': (r'assets\characters\argon\bodies'
-                 r'\char_arg_f_sweater_leggings_civ_01.xac'),
+        'head': os.path.relpath(paths.HOST_HEAD, paths.X4_ROOT),
+        'body': os.path.relpath(paths.HOST_BODY, paths.X4_ROOT),
     }
     members = [m for m in cat_members(cat) if m.lower().endswith('.xac')]
     if not members:
@@ -182,10 +185,14 @@ def check_xml(mod, mode, race, weight, c):
                   % n_replace)
         else:
             c.ok('no <replace>: vanilla macros untouched')
-        if race_cfg['macro'] not in text:
-            c.bad('the new macro %s is not declared' % race_cfg['macro'])
+        want_macros = [make_mod.macro_name(k)
+                       for k, _l, _a in make_mod.OUTFITS]
+        missing = [m for m in want_macros if m not in text]
+        if missing:
+            c.bad('these macros are not declared: %s' % missing)
         else:
-            c.ok('macro %s declared (%d <add>)' % (race_cfg['macro'], n_add))
+            c.ok('macros declared (%d <add>): %s'
+                 % (n_add, ', '.join(want_macros)))
         if not os.path.exists(pools_path):
             c.bad('charactergroups.xml missing in add mode')
             return
@@ -201,15 +208,21 @@ def check_xml(mod, mode, race, weight, c):
             c.ok('%d female pools patched, exactly the ones discovered'
                  % len(got))
         for name, body in got:
-            n = body.count('<select macro="%s"' % race_cfg['macro'])
-            if n != weight:
-                c.bad('%s lists her %d times, expected %d' % (name, n, weight))
-            if count_selects(body) != n:
-                c.bad('%s: the patch lists something other than her' % name)
+            total = 0
+            for m in want_macros:
+                n = body.count('<select macro="%s"' % m)
+                if n != weight:
+                    c.bad('%s lists %s %d times, expected %d'
+                          % (name, m, n, weight))
+                total += n
+            if count_selects(body) != total:
+                c.bad('%s: the patch lists something other than our macros'
+                      % name)
             if not vanilla.get(name):
                 c.bad('%s is not a vanilla pool' % name)
         if not any(f.startswith(('pools patched', 'none')) for f in c.fail):
-            c.ok('each pool gained exactly her %d entry/entries' % weight)
+            c.ok('each pool gained exactly %d entry/entries (%d outfits x %d)'
+                 % (weight * len(want_macros), len(want_macros), weight))
     else:
         if not n_replace:
             c.bad('no <replace> in replace mode -- nothing was converted')
@@ -242,18 +255,17 @@ def main():
     ap.add_argument('--race', choices=sorted(RACES), default='argon')
     ap.add_argument('--weight', type=int, default=1)
     ap.add_argument('--mod', default=None,
-                    help='mod tree to check (default work/x4_ganyu_<race>_<mode>)')
+                    help='mod tree to check (default work/x4_yue_<race>_<mode>)')
     args = ap.parse_args()
 
-    mod = args.mod or os.path.join(
-        paths.WORK, 'x4_ganyu_%s_%s' % (args.race, args.mode))
+    mod = args.mod or paths.mod_dir(args.race, args.mode)
     if not os.path.isdir(mod):
         raise SystemExit('%s does not exist -- build it first' % mod)
     print('verifying %s (%s mode, %s race)' % (mod, args.mode, args.race))
 
     # make_mod resolves its pools/macro names through module-level state that
     # `configure()` binds; without this the add-mode pool check reads None
-    make_mod.configure(args.race, args.mode, args.mode)
+    make_mod.configure(args.race, args.mode)
 
     c = Checker()
     check_tree(mod, c)

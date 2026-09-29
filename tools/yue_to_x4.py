@@ -285,13 +285,20 @@ class YueAdapter:
     #: 动画一播就现形。
     #:
     #: 判据有两条：**骨链横向单调外撇**（大腿 < 小腿 < 踝）且**两脚间距
-    #: 接近 vanilla 的 35.4 cm**。按下面的取值，踝落在 8.8 + (17.70-8.8)*0.95
-    #: = 17.26 cm，即两脚间距 34.5 cm。用 `tools/measure_legs.py` 复核。
+    #: 接近 vanilla 的 35.4 cm**。用 `tools/measure_legs.py` 复核。
+    #:
+    #: 这里的取值**大于 1**（脚的 1.20），这是刻意的：阻尼设的是**骨**的
+    #: 目标位置，而判据量的是**几何**。月清疏的脚几何相对它的脚骨向内偏
+    #: 约 1.6 cm（实测绑定姿态下左脚顶点重心在 X=15.7，而脚骨在 17.3），
+    #: 所以骨落在 vanilla 的位置时几何仍然偏窄 —— 第一版按 0.60/0.85/0.95
+    #: 建出来，动画里的两脚间距只有 vanilla 的 76%（25.2 对 33.1 cm），
+    #: 而骨链本身已经和 vanilla 逐位相同。把脚的目标再往外推 2 cm，几何
+    #: 才落到该在的地方。
     LATERAL_DAMP = {
-        'Bip01 L Thigh': 0.60, 'Bip01 R Thigh': 0.60,
-        'Bip01 L Calf': 0.85, 'Bip01 R Calf': 0.85,
-        'Bip01 L Foot': 0.95, 'Bip01 R Foot': 0.95,
-        'Bip01 L Toe0': 0.95, 'Bip01 R Toe0': 0.95,
+        'Bip01 L Thigh': 0.80, 'Bip01 R Thigh': 0.80,
+        'Bip01 L Calf': 1.00, 'Bip01 R Calf': 1.00,
+        'Bip01 L Foot': 1.20, 'Bip01 R Foot': 1.20,
+        'Bip01 L Toe0': 1.20, 'Bip01 R Toe0': 1.20,
     }
 
     def adjust_target(self, x4_bone, src_pos, dst_pos):

@@ -54,7 +54,7 @@ def status():
 
 
 def deploy(mode, root=None, keep_source=False):
-    src = os.path.join(paths.WORK, 'x4_ganyu_argon_%s' % mode)
+    src = paths.mod_dir('argon', mode)
     if not os.path.isdir(src):
         raise SystemExit('%s missing -- run "python tools/make_mod.py --race '
                          'argon --mode %s" first' % (src, mode))
