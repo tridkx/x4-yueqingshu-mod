@@ -77,8 +77,9 @@ def main():
     ap.add_argument('--mode', choices=('add', 'replace'), default='add',
                     help='mod 形态（默认 add：正式的形态）')
     ap.add_argument('--race', choices=('argon',), default='argon')
-    ap.add_argument('--outfits', default='a,b',
-                    help='要构建的套装（默认两个都构建）')
+    ap.add_argument('--outfits', default='a',
+                    help='要构建的套装（默认只构建 A；B 的源定义还在，'
+                         "需要时用 --outfits a,b 恢复）")
     ap.add_argument('--skip', default='', metavar='STEP[,STEP]',
                     help='跳过的步骤：%s[,deploy]' % ','.join(STEPS))
     ap.add_argument('--only', default='', metavar='STEP[,STEP]',
