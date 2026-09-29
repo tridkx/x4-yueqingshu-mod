@@ -1,5 +1,10 @@
 # 月清疏（仙剑奇侠传七）→ X4: Foundations **Argon 女性** NPC
 
+> 源码：<https://github.com/tridkx/x4-yueqingshu-mod> · 成品 mod 见 [Releases](https://github.com/tridkx/x4-yueqingshu-mod/releases)
+> —— 与作者另外几个 X4 项目同源：[x4-character-retarget](https://github.com/tridkx/x4-character-retarget)（管线与文档）、
+> [x4-ganyu-mod](https://github.com/tridkx/x4-ganyu-mod)、[x4-lumine-mod](https://github.com/tridkx/x4-lumine-mod)、
+> [x4-boru-mod](https://github.com/tridkx/x4-boru-mod)。
+
 把《仙剑奇侠传七》的**月清疏**（UE4.25 / 3ds Max Biped，两套装共 191 / 239 骨）
 移植成《X4：基石》里的 **Argon 女性** NPC 外观，替换头部与躯干网格。
 
