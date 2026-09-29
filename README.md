@@ -126,7 +126,7 @@ python   tools/deploy.py --mode none                       # 卸载
 | 骨架 / 绕序 / 顶点爆炸 | 无 | 无 | 无 | — |
 | 结论 | WARN（撕裂一项） | **OK（0 告警）** | — | — |
 
-指标是**比值**；逐张对比图（`report_add2/shots/`、`report_b/shots/`）已确认
+指标是**比值**；逐张对比图（`report_outfit_a/shots/`、`report_outfit_b/shots/`）已确认
 无破面、无错位、贴图正确。**两项都不差于已发布的前作。**
 
 ## 已知问题
