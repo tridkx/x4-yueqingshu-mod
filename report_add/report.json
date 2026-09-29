@@ -1,0 +1,244 @@
+{
+  "tool": "x4-anim-preview/ai_check",
+  "generated": "2026-09-30 00:23:10",
+  "mod_dir": "D:\\dsh-x4\\yueqingshu\\work\\x4_yue_argon_add",
+  "mod_assets": {
+    "torso": "yue_a_body.xac",
+    "head": "yue_a_head.xac"
+  },
+  "elapsed_s": 62.4,
+  "static": {
+    "skeleton": {
+      "torso": {
+        "ok": true,
+        "slot": "torso",
+        "shared_bones": 89,
+        "reference_bones": 89,
+        "missing_bones": [],
+        "missing_count": 0,
+        "max_pos_diff_cm": 0.0,
+        "mean_pos_diff_cm": 0.0,
+        "max_rot_diff_deg": 3e-06,
+        "max_scale_diff": 0.0,
+        "parent_mismatch": 0,
+        "worst_pos_bone": null,
+        "worst_rot_bone": null
+      },
+      "head": {
+        "ok": true,
+        "slot": "head",
+        "shared_bones": 89,
+        "reference_bones": 89,
+        "missing_bones": [],
+        "missing_count": 0,
+        "max_pos_diff_cm": 0.0,
+        "mean_pos_diff_cm": 0.0,
+        "max_rot_diff_deg": 3e-06,
+        "max_scale_diff": 0.0,
+        "parent_mismatch": 0,
+        "worst_pos_bone": null,
+        "worst_rot_bone": null
+      }
+    },
+    "budget": {
+      "torso": {
+        "mod_verts": 15782,
+        "vanilla_verts": 4600,
+        "ratio": 3.431,
+        "tris": 20117
+      },
+      "head": {
+        "mod_verts": 19730,
+        "vanilla_verts": 5002,
+        "ratio": 3.944,
+        "tris": 22543
+      }
+    },
+    "normals": {
+      "torso": {
+        "mod": 0.9698,
+        "vanilla": 0.945,
+        "note": "mean|dot(面法线,顶点法线)|，接近 1 = 平面着色"
+      },
+      "head": {
+        "mod": 0.986,
+        "vanilla": 0.9819,
+        "note": "mean|dot(面法线,顶点法线)|，接近 1 = 平面着色"
+      }
+    },
+    "winding": {
+      "torso": {
+        "mod": 0.0034,
+        "vanilla": 0.0004
+      },
+      "head": {
+        "mod": 0.0017,
+        "vanilla": 0.0
+      }
+    }
+  },
+  "flags": [],
+  "hard_failures": [],
+  "animations": [
+    {
+      "name": "anim_stand_idle_05",
+      "asset": "anim_a-a_ar_fe_generic_05",
+      "path": "assets/characters/animations/anim_a-a_ar_fe_generic_05.xsm",
+      "duration_s": 5.0,
+      "frame_rate": 30,
+      "matched": 0.9672,
+      "metrics": {
+        "joint_tear_cm": {
+          "mod": 9.608,
+          "vanilla": 6.831,
+          "ratio": 1.407
+        },
+        "feet_gap_cm": {
+          "mod": 25.215,
+          "vanilla": 33.067,
+          "ratio": 0.763
+        },
+        "lateral_chain_ok": {
+          "mod": true,
+          "vanilla": true
+        },
+        "ground_gap_min_cm": {
+          "mod": -0.6,
+          "vanilla": -0.34
+        }
+      },
+      "flags": [
+        "关节撕裂 是 vanilla 的 141%（上限 135%）：9.61 vs 6.83",
+        "两脚间距 只有 vanilla 的 76%（下限 85%）：25.21 vs 33.07"
+      ]
+    },
+    {
+      "name": "anim_sit_idle_01",
+      "asset": "anim_b-b_ar_fe_generic_01",
+      "path": "assets/characters/animations/anim_b-b_ar_fe_generic_01.xsm",
+      "duration_s": 10.233,
+      "frame_rate": 30,
+      "matched": 0.9714,
+      "metrics": {
+        "joint_tear_cm": {
+          "mod": 9.474,
+          "vanilla": 6.722,
+          "ratio": 1.409
+        },
+        "feet_gap_cm": {
+          "mod": 24.037,
+          "vanilla": 30.84,
+          "ratio": 0.779
+        },
+        "lateral_chain_ok": {
+          "mod": false,
+          "vanilla": false
+        },
+        "ground_gap_min_cm": {
+          "mod": 0.69,
+          "vanilla": 1.1
+        }
+      },
+      "flags": [
+        "关节撕裂 是 vanilla 的 141%（上限 135%）：9.47 vs 6.72",
+        "两脚间距 只有 vanilla 的 78%（下限 85%）：24.04 vs 30.84"
+      ]
+    },
+    {
+      "name": "anim_2htooluse_01",
+      "asset": "anim_a_twohandtool_ar_01",
+      "path": "assets/characters/animations/anim_a_twohandtool_ar_01.xsm",
+      "duration_s": 3.0,
+      "frame_rate": 15,
+      "matched": 0.7624,
+      "metrics": {
+        "joint_tear_cm": {
+          "mod": 9.563,
+          "vanilla": 6.809,
+          "ratio": 1.404
+        },
+        "feet_gap_cm": {
+          "mod": 33.048,
+          "vanilla": 40.663,
+          "ratio": 0.813
+        },
+        "lateral_chain_ok": {
+          "mod": true,
+          "vanilla": true
+        },
+        "ground_gap_min_cm": {
+          "mod": -3.08,
+          "vanilla": -2.7
+        }
+      },
+      "flags": [
+        "关节撕裂 是 vanilla 的 140%（上限 135%）：9.56 vs 6.81",
+        "两脚间距 只有 vanilla 的 81%（下限 85%）：33.05 vs 40.66"
+      ]
+    }
+  ],
+  "shots": [
+    {
+      "file": "shots/anim_stand_idle_05.png",
+      "animation": "anim_stand_idle_05",
+      "view": "azimuth=200 elevation=6",
+      "layout": "从左到右依次为 mod(t0) vanilla(t0) mod(t1) vanilla(t1) ...",
+      "frames_s": [
+        0.833,
+        2.5,
+        4.167
+      ]
+    },
+    {
+      "file": "shots/anim_stand_idle_05_views.png",
+      "animation": "anim_stand_idle_05",
+      "view": "环绕 4 个角度，elevation=6",
+      "layout": "每个角度两张：先 mod 后 vanilla，角度依次为 0°, 90°, 180°, 270°",
+      "frames_s": [
+        2.5
+      ]
+    },
+    {
+      "file": "shots/anim_sit_idle_01.png",
+      "animation": "anim_sit_idle_01",
+      "view": "azimuth=200 elevation=6",
+      "layout": "从左到右依次为 mod(t0) vanilla(t0) mod(t1) vanilla(t1) ...",
+      "frames_s": [
+        1.706,
+        5.117,
+        8.528
+      ]
+    },
+    {
+      "file": "shots/anim_sit_idle_01_views.png",
+      "animation": "anim_sit_idle_01",
+      "view": "环绕 4 个角度，elevation=6",
+      "layout": "每个角度两张：先 mod 后 vanilla，角度依次为 0°, 90°, 180°, 270°",
+      "frames_s": [
+        5.117
+      ]
+    },
+    {
+      "file": "shots/anim_2htooluse_01.png",
+      "animation": "anim_2htooluse_01",
+      "view": "azimuth=200 elevation=6",
+      "layout": "从左到右依次为 mod(t0) vanilla(t0) mod(t1) vanilla(t1) ...",
+      "frames_s": [
+        0.5,
+        1.5,
+        2.5
+      ]
+    },
+    {
+      "file": "shots/anim_2htooluse_01_views.png",
+      "animation": "anim_2htooluse_01",
+      "view": "环绕 4 个角度，elevation=6",
+      "layout": "每个角度两张：先 mod 后 vanilla，角度依次为 0°, 90°, 180°, 270°",
+      "frames_s": [
+        1.5
+      ]
+    }
+  ],
+  "status": "warn",
+  "how_to_read": "status: ok/warn/fail。hard_failures 是必须修的硬伤（骨架不一致、绕序翻转、顶点爆炸）。flags 是疑似问题，每条都给了 mod/vanilla 的比值。animations[].metrics 里 ratio = mod/vanilla，越接近 1 越好。shots/ 里每张图从左到右是 mod、vanilla 交替的同一时刻，可直接目视对比。"
+}
