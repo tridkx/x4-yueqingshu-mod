@@ -154,7 +154,7 @@ python   tools/deploy.py --mode none                       # 卸载
 | 顶点预算 | head 19166 vs 5002（**3.83×**）；torso 15781 vs 4600（**3.43×**），上限 6× |
 | 贴图 | 12 个材质，全部在 `ext_01.cat` 内可解析 |
 | 自检 | `verify_mod.py` 两种形态全过（**0 警告**） |
-| XML 生效性 | `check_xpath.py`：把 diff 套到合并后的 vanilla 库（726 macro / 134 池）上，add 形态 9 条 sel、replace 形态 123 条 sel **全部命中** |
+| XML 生效性 | `check_xpath.py`：把 diff 套到合并后的 vanilla 库（**726 macro / 428 池 / 131 个 `.female` 池**）上，add 形态 9 条 sel、replace 形态 123 条 sel **全部命中** |
 
 ### 动画预览（`x4-anim-preview/tools/ai_check.py`）
 
