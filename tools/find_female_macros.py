@@ -49,8 +49,13 @@ import paths                                                     # noqa: E402
 #: factions whose members are explicitly not the NPCs we replace
 EXCLUDE_FACTIONS = {'player'}
 
+#: 会刷这个种族女性的**势力**前缀。判据是"谁在用这个池"，不是"池里的 macro
+#: 叫什么" —— 只写主种族会漏掉衍生势力：实测 `argon.` 漏掉
+#: `antigone.factiondiplomat.female` 与 `hatikvah.factiondiplomat.female`
+#: 两个池（它们直接列 argon 的 macro），add 形态下这两个势力招的女性外交官
+#: 仍然是原版，且没有任何报错。
 RACE_POOL_PREFIX = {
-    'argon': ('argon.',),
+    'argon': ('argon.', 'antigone.', 'hatikvah.'),
     'terran': ('terran.', 'pioneers.'),
 }
 

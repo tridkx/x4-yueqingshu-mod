@@ -22,7 +22,7 @@ python tools/check_xpath.py --mode add      # 验证 XML 的 sel 真能命中 va
 
 | 形态 | 你会得到什么 | 什么时候用 |
 |---|---|---|
-| **仅增加** `--mode add` | 新增一条 macro `character_argon_female_yue_a_macro`，并往 **6 个 Argon 女性外观池**各加一条 `<select>`。**原版 macro 一条不动**，她只是随机出现的其中一种；其余女性保持自己的脸/名字/语音。**剧情/任务 NPC 不走外观池，保持原版。** | 正式游玩、发布 |
+| **仅增加** `--mode add` | 新增一条 macro `character_argon_female_yue_a_macro`，并往 **8 个 Argon 女性外观池**各加一条 `<select>`。**原版 macro 一条不动**，她只是随机出现的其中一种；其余女性保持自己的脸/名字/语音。**剧情/任务 NPC 不走外观池，保持原版。** | 正式游玩、发布 |
 | **全量替换** `--mode replace` | 把 **122 个** Argon 女性 macro 的 `<models>` 逐个改写成月清疏，含不走池的剧情 NPC —— 所有 Argon 女性都是她 | 想看模型出现在所有地方 / 调试 |
 
 两种形态共用同一个扩展 id（`x4_yueqingshu_mod`）与同一套资产路径，**同时只能装一个**。
@@ -70,6 +70,9 @@ YueQingShu_MAJ02_01.glb（含骨骼蒙皮）
 | `tools/prepare_textures_yue.py` | 源 `_D`/`_N`/`_ORM` → DDS（BC1/BC5/BC4）+ 材质 manifest |
 | `tools/build_yue_mod.py` | 阶段 2：填进 vanilla 宿主的网格槽、导出 `.xac` |
 | `tools/make_mod.py` | 组装 mod 树（`--mode add` / `--mode replace`） |
+| `tools/x4lib.py` | **库解析与查询的唯一实现**（`load_tree` / `index` / `expand_pool` / `effective_race` / `audit_race`）—— `make_mod` 与 `check_xpath` 都要用，放这里才不会成环 |
+| `tools/macro_inventory.py` | **开工第一步**：版本指纹 + macro/池清单落盘，`--check` 命中就复用 |
+| `tools/audit_pools.py` | 打印"该覆盖哪些池"，并与构建脚本的配置对比 |
 | `tools/find_female_macros.py` | 枚举「有效 race=argon 且 female」的 macro → `work/argon_female_macros.json` |
 | `tools/verify_mod.py` | 发版自检：树 / 材质 / **骨架逐字节** / XML 语义 |
 | `tools/check_xpath.py` | 把 diff 真套到 vanilla 库上，验证**每条 sel 都命中**（“改了没变化”的头号原因） |
@@ -151,7 +154,7 @@ python   tools/deploy.py --mode none                       # 卸载
 | 顶点预算 | head 19166 vs 5002（**3.83×**）；torso 15781 vs 4600（**3.43×**），上限 6× |
 | 贴图 | 12 个材质，全部在 `ext_01.cat` 内可解析 |
 | 自检 | `verify_mod.py` 两种形态全过（**0 警告**） |
-| XML 生效性 | `check_xpath.py`：把 diff 套到合并后的 vanilla 库（726 macro / 134 池）上，add 形态 7 条 sel、replace 形态 123 条 sel **全部命中** |
+| XML 生效性 | `check_xpath.py`：把 diff 套到合并后的 vanilla 库（726 macro / 134 池）上，add 形态 9 条 sel、replace 形态 123 条 sel **全部命中** |
 
 ### 动画预览（`x4-anim-preview/tools/ai_check.py`）
 

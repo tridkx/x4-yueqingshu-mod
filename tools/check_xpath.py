@@ -34,54 +34,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import paths                                                      # noqa: E402
 import make_mod                                                   # noqa: E402
-
-
-def load_tree(sources):
-    """按加载顺序合并成 ElementTree；返回 (root, 每类节点的个数)。"""
-    root = ET.Element('root')
-    for path in sources:
-        if not os.path.exists(path):
-            continue
-        try:
-            top = ET.parse(path).getroot()
-        except ET.ParseError as e:
-            print('  !! %s 解析失败：%s' % (path, e))
-            continue
-        # 顶层可能是 <macros> / <characters>，也可能是它们的容器
-        for child in top:
-            if child.tag in ('macros', 'characters', 'materiallibrary'):
-                for item in child:
-                    _upsert(root, child.tag, item)
-            else:
-                _upsert(root, top.tag if top.tag != 'root' else child.tag,
-                        child)
-    return root
-
-
-def _upsert(root, group_tag, item):
-    name = item.get('name')
-    if name is None:
-        root.append(item)
-        return
-    group = root.find(group_tag)
-    if group is None:
-        group = ET.SubElement(root, group_tag)
-    for old in group.findall("*[@name='%s']" % name):
-        group.remove(old)          # 后加载的覆盖先加载的
-    group.append(item)
-
-
-def to_relative(xpath):
-    """X4 的 sel 是从文档根写的（`/macros/...`），而 ElementTree 的
-    `findall` **拒绝在元素上用绝对路径**（报 `cannot use absolute path on
-    element`）。
-
-    合成树的根是 `<root>`，其下挂着 `<macros>` / `<characters>`，所以文档根
-    的下一层正好等于我们这棵树的相对路径：把开头的 `/` 去掉即可，语义不变。
-    （这一点先证伪了自己：第一版把 ET 的报错当成"sel 不生效"，其实是我们
-    自己的尺子拿反了。）
-    """
-    return xpath.lstrip('/')
+# 库解析统一放在 x4lib（这里和 make_mod 都要用，直接互相 import 会成环）
+from x4lib import load_tree, to_relative                         # noqa: E402
 
 
 def main():

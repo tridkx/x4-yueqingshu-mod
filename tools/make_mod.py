@@ -48,7 +48,21 @@ RACES = {
         'race': 'argon',
         'base_macro': 'character_argon_female_cau_base_01_macro',
         'asset_dir': 'argon',
-        'pool_prefixes': ('argon.',),
+        #: 会刷这个种族女性的**势力**前缀。判据是"谁在用这个池"，而不是
+        #: "池里的 macro 叫什么" —— 两者都会骗人：
+        #:
+        #: * `antigone.*` / `hatikvah.*` 是 Argon 的衍生势力，它们的
+        #:   `factiondiplomat.female` 池**直接列** `character_arg_f_diplomat_0{2,3}_macro`
+        #:   （有效 race = argon）。只写 `argon.` 会漏掉它们 —— 实测漏 2 个，
+        #:   add 形态下这两个势力招的女性外交官仍然是原版；
+        #: * 反过来 `terran.*.female` 里也有池选 argon 的 macro（泰伦的外交官），
+        #:   但它们属于泰伦，收进来是错的。
+        #:
+        #: 另外 8 个 `argon.*.female`（`trader` / `passenger` / `prisoner` …）
+        #: 是**纯路由池**，只含 `<select character="...">` 指向上面某个池，
+        #: 不加它们：往路由器里塞是死重量，而它指向的那个池本来就在列表里。
+        #: 这一条由 `female_pools_with_macros()` 的第二个筛子保证。
+        'pool_prefixes': ('argon.', 'antigone.', 'hatikvah.'),
         'macro_list': os.path.join(paths.WORK, 'argon_female_macros.json'),
         'label': 'Argon',
         'label_cn': '阿贡（Argon）',
@@ -245,16 +259,24 @@ def merge_material_library(textures):
 
 
 def merge_library(sources):
-    """按加载顺序合并 {名字: 块}，用于 `<macro>` / `<character>`。"""
+    """按加载顺序合并 {名字: 块文本}，用于 `<macro>` / `<character>`。
+
+    **底层是 ElementTree，不是正则。** 原来那版正则有三个毛病，实测同一批库
+    它给出 681 个 macro / 429 个池，而 ET 给出 **726 / 134** —— 少算 45 个
+    macro，多算 295 个池（把嵌套标签也当成了独立的池）；而且开标签的属性
+    （**包括 `ref`**）被 `[^>]*>` 吞掉，任何"沿 ref 链解析有效 race"都失效。
+    池的数目多算三倍，则"我覆盖了多少个池"这类结论全是错的。
+
+    返回的仍是文本（调用方在用正则找 `<select ...>`），但这次是从解析过的
+    元素序列化出来的，属性齐全。
+    """
+    import xml.etree.ElementTree as _ET
+    from x4lib import load_tree, index
+    root = load_tree(sources)
     out = {}
-    for path in sources:
-        if not os.path.exists(path):
-            continue
-        text = read(path)
-        for tag in ('macro', 'character'):
-            for m in re.finditer(r'<%s\s+name="([^"]+)"[^>]*>(.*?)</%s>'
-                                 % (tag, tag), text, re.S):
-                out[m.group(1)] = m.group(2)      # 后面的库覆盖前面的
+    for group in ('macros', 'characters'):
+        for name, el in index(root, group).items():
+            out[name] = _ET.tostring(el, encoding='unicode')
     return out
 
 
